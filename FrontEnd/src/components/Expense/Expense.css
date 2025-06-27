@@ -1,0 +1,166 @@
+.expense-container {
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.expense-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.expense-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.add-expense-btn {
+  background-color: #e74c3c;
+  color: white;
+  font-weight: 600;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.add-expense-btn:hover {
+  background-color: #d62c1a;
+}
+
+.expense-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.expense-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expense-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.expense-icon {
+  font-size: 24px;
+  object-fit: contain;
+}
+
+.expense-name {
+  margin: 0;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.expense-date {
+  margin: 0;
+  font-size: 12px;
+  color: gray;
+}
+
+.expense-amount {
+  font-weight: bold;
+  color: red;
+  font-size: 15px;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px 25px;
+  border-radius: 10px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-content h3 {
+  margin: 0;
+  text-align: center;
+}
+
+.modal-content input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.add-btn {
+  background-color: #e74c3c;
+  color: white;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  flex: 1;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: gray;
+  color: white;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  flex: 1;
+  cursor: pointer;
+}
+
+.expense-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding-right: 10px;
+}
+
+.expense-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: red;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.expense-item:hover .delete-btn {
+  opacity: 1;
+}
+

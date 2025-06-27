@@ -1,0 +1,167 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dashboard-container {
+  padding: 20px;
+  width: 100%;
+}
+
+.summary-cards {
+  display: flex;
+  gap: 20px;
+  margin-top: -12px;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+/* Individual Card Styles */
+.card {
+  flex: 1;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  color: #1d1c1c;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card.balance,
+.card.income,
+.card.expense {
+  background-color: whitesmoke;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-text h3 {
+  margin: 0;
+  font-size: 18px;
+  text-align: left;
+}
+
+.card-text p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+}
+
+
+.icon-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+
+.dashboard-lower {
+  display: flex;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+/* Transaction Section */
+.trans-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.see-all {
+  background: none;
+  border: none;
+  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.trans-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.trans-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.trans-info {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.trans-icon {
+  font-size: 24px;
+}
+
+.trans-name {
+  margin: 0;
+  font-weight: 600;
+  text-align: left;
+}
+
+.trans-date {
+  margin: 0;
+  font-size: 12px;
+  color: gray;
+  text-align: left;
+}
+
+.trans-amount {
+  font-weight: 600;
+}
+
+.trans-amount.red {
+  color: red;
+}
+
+.trans-amount.green {
+  color: green;
+}
+
+/* Financial Overview */
+.overview {
+  text-align: center;
+}
+
+.pie-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart-legend {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.legend-item {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend-item span {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  border-radius: 50%;
+}
