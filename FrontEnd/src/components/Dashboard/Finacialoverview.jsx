@@ -10,7 +10,7 @@ const Financialoverview = ({ income, expense, balance }) => {
 
   return (
     <div className="overview card">
-      <h3>Financial Overview</h3>
+      <h3>Financial Overview (This Month)</h3>
       <div className="pie-wrapper">
         <PieChart width={250} height={250}>
           <Pie
@@ -40,18 +40,19 @@ const Financialoverview = ({ income, expense, balance }) => {
                   dominantBaseline="middle"
                   style={{ fontSize: '14px', fontWeight: 'bold', fill: '#000' }}
                 >
-                  ₹ {balance.toLocaleString()}
+                  ₹ {balance}
                 </text>
               </>
             )}
           >
             {chartData.map((entry, index) => (
-              <Cell key={index} fill={entry.color} />
+              <Cell key={`cell-${index}`} fill={entry.color} />
             ))}
           </Pie>
           <Tooltip />
         </PieChart>
       </div>
+
       <div className="chart-legend">
         {chartData.map((d, i) => (
           <div key={i} className="legend-item">
@@ -62,5 +63,6 @@ const Financialoverview = ({ income, expense, balance }) => {
     </div>
   );
 };
+
 
 export default Financialoverview;

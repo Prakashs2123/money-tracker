@@ -1,0 +1,21 @@
+/* Monthly.css */
+
+/* For income transactions */
+.income-event {
+  background-color: #d4f8d4 !important; /* Light green */
+  color: #2e7d32 !important;           /* Dark green text */
+  border: none;
+  border-radius: 4px;
+  padding: 2px 5px;
+  font-weight: bold;
+}
+
+/* For expense transactions */
+.expense-event {
+  background-color: #ffd6d6 !important; /* Light red */
+  color: #c62828 !important;            /* Dark red text */
+  border: none;
+  border-radius: 4px;
+  padding: 2px 5px;
+  font-weight: bold;
+}

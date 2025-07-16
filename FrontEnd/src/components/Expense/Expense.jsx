@@ -1,45 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import './Expense.css';
 import ExpenseModal from './ExpenseModal';
 import { MdDelete } from 'react-icons/md';
+import { GlobalContext } from '../../Context/GlobalContext';
+// import { GlobalContext } from '../../context/GlobalContext';
 
 const Expense = () => {
   const [expenses, setExpenses] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const { fetchSummary } = useContext(GlobalContext);
 
   useEffect(() => {
     fetchExpenses();
   }, []);
 
   const fetchExpenses = async () => {
-    try {
-      const res = await axios.get('http://localhost:5000/api/transactions');
-      const expenseOnly = res.data.filter(item => item.type === 'expense');
-      setExpenses(expenseOnly);
-    } catch (err) {
-      console.error("Error fetching expenses:", err);
-    }
-  };
+  const email = localStorage.getItem("userEmail");
+  if (!email) return;
+
+  try {
+    const res = await axios.get(`http://localhost:5000/api/transactions?type=expense&email=${email}`);
+    const sorted = res.data.sort((a, b) => new Date(b.date) - new Date(a.date)); // sort by date descending
+    setExpenses(sorted);
+  } catch (err) {
+    console.error("Error fetching expenses:", err);
+  }
+};
+
+
 
   const handleAddExpense = async (expense) => {
-    const newExpense = {
-      ...expense,
-      type: 'expense'
-    };
+  const email = localStorage.getItem("userEmail");
 
-    try {
-      await axios.post('http://localhost:5000/api/transactions', newExpense);
-      fetchExpenses();
-    } catch (err) {
-      console.error("Error adding expense:", err);
-    }
+  const newExpense = {
+    ...expense,
+    type: 'expense',
+    email: email   //  attach logged-in user email
   };
+
+  try {
+    await axios.post('http://localhost:5000/api/transactions', newExpense);
+    fetchExpenses();
+    fetchSummary(); // sync summary
+  } catch (err) {
+    console.error("Error adding expense:", err);
+  }
+};
+
 
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:5000/api/transactions/${id}`);
       fetchExpenses();
+      fetchSummary(); // sync summary
     } catch (err) {
       console.error("Error deleting expense:", err);
     }
@@ -59,7 +73,10 @@ const Expense = () => {
               <span className="expense-icon">{item.emoji || '💸'}</span>
               <div>
                 <p className="expense-name">{item.source}</p>
-                <p className="expense-date">{item.date}</p>
+                <p className="expense-date">
+  {new Date(item.date).toLocaleDateString('en-GB').replace(/\//g, '-')}
+</p>
+
               </div>
             </div>
             <div className="expense-right">

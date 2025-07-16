@@ -1,0 +1,58 @@
+.all-transactions {
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  margin-top: 10px;
+
+}
+h3{
+  font-size: 25px;
+}
+
+.transaction-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 18px;
+  
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.tx-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tx-icon {
+  font-size: 20px;
+}
+
+.tx-source {
+  font-weight: 600;
+  margin: 0;
+}
+
+.tx-date {
+  font-size: 12px;
+  color: gray;
+}
+
+.tx-amount {
+  font-weight: bold;
+}
+
+.tx-amount.green {
+  color: green;
+}
+
+.tx-amount.red {
+  color: red;
+}

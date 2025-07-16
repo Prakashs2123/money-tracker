@@ -12,26 +12,29 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const res = await axios.post('http://localhost:5000/login', {
-        email: email.trim().toLowerCase(),
-        password: password.trim()
-      });
+  try {
+    const res = await axios.post('http://localhost:5000/login', {
+      email: email.trim().toLowerCase(),
+      password: password.trim()
+    });
 
-      toast.success(res.data.message);     
-      navigate('/dashBoard');
-    } catch (err) {
-      if (err.response?.data?.error) {
-        toast.error(err.response.data.error); 
-      } else {
-        toast.error("Server error"); 
-      }
+    // ✅ Store email in localStorage
+    localStorage.setItem("userEmail", res.data.email);
+
+    toast.success(res.data.message);     
+    navigate('/dashboard');
+  } catch (err) {
+    if (err.response?.data?.error) {
+      toast.error(err.response.data.error); 
+    } else {
+      toast.error("Server error"); 
     }
-  };
-  // console.log('working properly');
-  console.log("Submitting to backend:", email.trim().toLowerCase(), password.trim());
+  }
+};
+
+
 
 
 

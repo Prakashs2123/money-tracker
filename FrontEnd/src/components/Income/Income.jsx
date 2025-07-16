@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import './Income.css';
 import IncomeModal from './IncomeModal';
 import { MdDelete } from 'react-icons/md';
-
+import { GlobalContext } from '../../Context/GlobalContext';
+// import { GlobalContext } from '../../context/GlobalContext';
 
 const Income = () => {
   const [incomeData, setIncomeData] = useState([]);
@@ -15,47 +16,62 @@ const Income = () => {
     emoji: ''
   });
 
+  const { fetchSummary } = useContext(GlobalContext);
+
   useEffect(() => {
     fetchIncome();
   }, []);
 
-  const fetchIncome = async () => {
-    try {
-      const res = await axios.get('http://localhost:5000/api/transactions');
-      const incomeOnly = res.data.filter(item => item.type === 'income');
-      setIncomeData(incomeOnly);
-    } catch (err) {
-      console.error('Fetch error:', err);
-    }
-  };
+ const fetchIncome = async () => {
+  const email = localStorage.getItem("userEmail");
+  if (!email) return;
+
+  try {
+    const res = await axios.get(`http://localhost:5000/api/transactions?type=income&email=${email}`);
+    const sorted = res.data.sort((a, b) => new Date(b.date) - new Date(a.date)); // sort by date desc
+    setIncomeData(sorted);
+  } catch (err) {
+    console.error('Fetch error:', err);
+  }
+};
+
+
 
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5000/api/transactions/${id}`);
-      fetchIncome();
-    } catch (err) {
-      console.error('Delete error:', err);
-    }
-  };
+  const email = localStorage.getItem("userEmail");
+  if (!email) return;
+
+  try {
+    await axios.delete(`http://localhost:5000/api/transactions/${id}?email=${email}`);
+    fetchIncome();
+    fetchSummary();
+  } catch (err) {
+    console.error('Delete error:', err);
+  }
+};
+
 
   const handleAddIncome = async () => {
-    const newIncome = {
-      type: 'income',
-      source: formData.source,
-      amount: parseInt(formData.amount),
-      date: formData.date,
-      emoji: formData.emoji
-    };
+  const email = localStorage.getItem("userEmail");
+  if (!email) return;
 
-    try {
-      await axios.post('http://localhost:5000/api/transactions', newIncome);
-      fetchIncome();
-      setShowModal(false);
-      setFormData({ source: '', amount: '', date: '', emoji: '' });
-    } catch (err) {
-      console.error('Add error:', err);
-    }
+  const newIncome = {
+    ...formData,
+    type: 'income',
+    email: email
   };
+
+  try {
+    await axios.post('http://localhost:5000/api/transactions', newIncome);
+    fetchIncome();     // refresh income list
+    fetchSummary();    // update dashboard summary
+    setShowModal(false);
+    setFormData({ source: '', amount: '', date: '', emoji: '' });
+  } catch (err) {
+    console.error("Error adding income:", err);
+  }
+};
+
 
   return (
     <div className="income-container">
@@ -71,16 +87,18 @@ const Income = () => {
               <span className="income-icon">{item.emoji || '💰'}</span>
               <div>
                 <p className="income-name">{item.source}</p>
-                <p className="income-date">{item.date}</p>
+                <p className="income-date">
+  {new Date(item.date).toLocaleDateString('en-GB').replace(/\//g, '-')}
+</p>
+
               </div>
             </div>
             <div className="income-right">
-<button className="delete-btn" onClick={() => handleDelete(item._id)}>
-  <MdDelete className="delete-icon" />
-</button>
-  <p className="income-amount">+ ₹{item.amount}</p>
-</div>
-
+              <button className="delete-btn" onClick={() => handleDelete(item._id)}>
+                <MdDelete className="delete-icon" />
+              </button>
+              <p className="income-amount">+ ₹{item.amount}</p>
+            </div>
           </div>
         ))}
       </div>

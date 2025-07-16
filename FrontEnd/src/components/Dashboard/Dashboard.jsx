@@ -1,53 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import './Dashboard.css';
 import Financialoverview from './Finacialoverview';
 import TransactionList from './TransactionList';
-import axios from 'axios';
+import { GlobalContext } from '../../Context/GlobalContext';
 
 const Dashboard = () => {
-  const [summary, setSummary] = useState({
-    income: 0,
-    expense: 0,
-    balance: 0,
-  });
-
-  useEffect(() => {
-    axios.get('http://localhost:5000/api/summary')
-      .then(res => {
-        setSummary(res.data);
-      })
-      .catch(err => console.log("Error fetching summary:", err));
-  }, []);
+  const { summary } = useContext(GlobalContext);
 
   return (
     <div className="dashboard-container">
+      {/* same card layout as before */}
       <div className="summary-cards">
-        <div className="card balance">
+        <div className="card overallbalance">
+          <div className="card-header">
+            <img src="/overallbalance.png" alt="Income Icon" className="icon-img" />
+            <div className="card-text">
+              <h3>Total Balance</h3>
+              <p>₹ {summary.overallbalance}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="card mbalance">
           <div className="card-header">
             <img src="/balance.png" alt="Balance Icon" className="icon-img" />
             <div className="card-text">
               <h3>Balance</h3>
-              <p>₹ {summary.balance}</p>
+              <p>₹ {summary.mbalance}</p>
             </div>
           </div>
         </div>
 
-        <div className="card income">
+        <div className="card mincome">
           <div className="card-header">
             <img src="/income.png" alt="Income Icon" className="icon-img" />
             <div className="card-text">
               <h3>Income</h3>
-              <p>₹ {summary.income}</p>
+              <p>₹ {summary.mincome}</p>
             </div>
           </div>
         </div>
 
-        <div className="card expense">
+        <div className="card mexpense">
           <div className="card-header">
             <img src="/Expense.png" alt="Expense Icon" className="icon-img" />
             <div className="card-text">
               <h3>Expense</h3>
-              <p>₹ {summary.expense}</p>
+              <p>₹ {summary.mexpense}</p>
             </div>
           </div>
         </div>
@@ -56,11 +55,10 @@ const Dashboard = () => {
       <div className="dashboard-lower">
         <TransactionList />
         <Financialoverview
-  income={summary.income}
-  expense={summary.expense}
-  balance={summary.balance}
-/>
-
+          income={summary.mincome}
+          expense={summary.mexpense}
+          balance={summary.mbalance}
+        />
       </div>
     </div>
   );
